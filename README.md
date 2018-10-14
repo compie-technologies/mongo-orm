@@ -122,15 +122,15 @@ The first argument is the name of the collection your model is for.
 
 All methods are async and returns `Query` object
 
-* find(query, options)
-* findOne(query, options)
-* remove(query, options)
-* findOneAndUpdate(filter, update, options)
-* insertOne(doc, options)
-* insertMany(docs, options)
-* aggregate(query, options)
+* `find(query, options)`
+* `findOne(query, options)`
+* `remove(query, options)`
+* `findOneAndUpdate(filter, update, options)`
+* `insertOne(doc, options)`
+* `insertMany(docs, options)`
+* `aggregate(query, options)`
 
-Example of performing **find** query:
+Example of performing `find()` query:
 
 ```js
 const query = {
