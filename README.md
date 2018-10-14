@@ -20,7 +20,7 @@ $ npm install mongo-orm
 ## Overview
 
 ### Connecting to MongoDB
-Using MongoClient.connect() according to [MongoDB driver api-doc](http://mongodb.github.io/node-mongodb-native/3.1/api)
+Using `MongoClient.connect()` according to [MongoDB driver api-doc](http://mongodb.github.io/node-mongodb-native/3.1/api)
 
 ```js
 const mongoOrm = require('mongo-orm');
@@ -38,7 +38,7 @@ MongoClient.connect(url).then(client => {
 });
 ```
 
-The MongoClient can also be required using the MongoOrm:
+The `MongoClient` can also be required using the MongoOrm:
 ```js
 const {MongoClient} = require('mongo-orm');
 ```
@@ -56,7 +56,7 @@ MongoClient.connect(url).then(client => {
 });
 ```
 
-The mongoOrm.create() method takes a second optional argument called 'options', which indicates whether json schema validation is required.
+The `create()` method takes a second optional argument called 'options', which indicates whether json schema validation is required.
 ```js
 const options = {schemaValidation: true};
 
@@ -64,7 +64,7 @@ const options = {schemaValidation: true};
 const mongoOrmInstance = mongoOrm.create(db, options);
 ```
 
-Once set to **true** then json schema validation will be performed on all created models.
+Once set to **true**, json schema validation will be performed on all created models.
 
 ### Defining a Schema
 
@@ -96,9 +96,10 @@ const mySchema = new Schema({
 ```
 
 The first argument is the schema object.
-The Schema constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
-'createdAt' property will be set once document is first inserted to db.
-'updatedAt' property will be set every time document is updates in db.
+The `Schema` constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
+
+`createdAt` property will be set once document is first inserted to db.
+`updatedAt` property will be set every time document is updates in db.
 
 ### Defining a Schema
 
@@ -110,7 +111,7 @@ The first argument is the name of the collection your model is for.
 
 ### Queries
 
-All methods are async and returns **Query** object
+All methods are async and returns `Query` object
 
 * find(query, options)
 * findOne(query, options)
@@ -130,9 +131,9 @@ const query = {
 const res = await myModel.find(query).exec();
 ```
 
-The exec() method performs the requested query and returns a **Cursor** object.
+The `exec()` method performs the requested query and returns a `Cursor` object.
 
-MongoOrm implements a second method called **asResultPromise()** that unwraps the **Cursor** object and can be used as follow:
+MongoOrm implements a second method called `asResultPromise()` that unwraps the response and can be used as follow:
 
 ```js
 const query = {
