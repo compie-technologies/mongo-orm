@@ -98,8 +98,8 @@ const mySchema = new Schema({
 The first argument is the schema object.
 The `Schema` constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
 
-`createdAt` property will be set once document is first inserted to db.
-`updatedAt` property will be set every time document is updates in db.
+* `createdAt` property will be set once document is first inserted to db.
+* `updatedAt` property will be set every time document is updates in db.
 
 ### Defining a Schema
 
