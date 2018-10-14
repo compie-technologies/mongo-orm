@@ -103,7 +103,7 @@ The `Schema` constructor takes a second optional argument called 'options', whic
 
 ### Create an Index
 
-Indexes can improve your application's performance. The following function creates an index on the `name` field in the documents collection.
+Indexes can improve your application's performance. The following function creates an index on the `name` field:
 ```js
 mySchema.createIndex({'name': 1}, {unique: true, background: true});
 ```
