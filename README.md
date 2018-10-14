@@ -95,13 +95,22 @@ const mySchema = new Schema({
 );
 ```
 
-The first argument is the schema object.
+The first argument is the schema object. See [Schema Validation](https://docs.mongodb.com/manual/core/schema-validation/index.html) for details.
+
 The `Schema` constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
+* `createdAt` property will be set once document is first inserted to db.
+* `updatedAt` property will be set every time document is updates in db.
 
-`createdAt` property will be set once document is first inserted to db.
-`updatedAt` property will be set every time document is updates in db.
+### Create an Index
 
-### Defining a Schema
+Indexes can improve your application's performance. The following function creates an index on the `name` field in the documents collection.
+```js
+mySchema.createIndex({'name': 1}, {unique: true, background: true});
+```
+
+The `createIndex()` method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
+
+### Defining a Model
 
 ```js
 const myModel = mongoOrmInstance.model('ModelName', mySchema);
