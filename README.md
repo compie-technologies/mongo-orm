@@ -1,5 +1,6 @@
 Mongo Orm
 ======================
+[MongoDB](https://www.mongodb.com/) driver wrapper for Node.js.
 
 ## Importing
 
@@ -19,6 +20,7 @@ $ npm install mongo-orm
 ## Overview
 
 ### Connecting to MongoDB
+Using MongoClient.connect() according to [MongoDB driver api-doc](http://mongodb.github.io/node-mongodb-native/3.1/api)
 
 ```js
 const mongoOrm = require('mongo-orm');
@@ -32,16 +34,39 @@ const dbName = 'myproject';
 
 // Use connect method to connect to the server
 MongoClient.connect(url).then(client => {
+    console.log("Connected successfully to server");
+});
+```
+
+The MongoClient can also be required using the MongoOrm:
+```js
+const {MongoClient} = require('mongo-orm');
+```
+
+### Creating a MongoOrm instance
+
+```js
+MongoClient.connect(url).then(client => {
 
     /** @type {Db} */
     const db = client.db(dbName);
 
-    /**@type{MongoOrm}*/
+    /**@type {MongoOrm}*/
     const mongoOrmInstance = mongoOrm.create(db);
 });
 ```
 
-### Defining a Model
+The mongoOrm.create() method takes a second optional argument called 'options', which indicates whether json schema validation is required.
+```js
+const options = {schemaValidation: true};
+
+/**@type {MongoOrm}*/
+const mongoOrmInstance = mongoOrm.create(db, options);
+```
+
+Once set to **true** then json schema validation will be performed on all created models.
+
+### Defining a Schema
 
 Models are defined through the `Schema` interface.
 
@@ -49,39 +74,70 @@ Models are defined through the `Schema` interface.
 const {Schema} = require('mongo-orm');
 
 const mySchema = new Schema({
-    bsonType: "object",
-    required: ["name"],
-    properties: {
-        name: {
-            bsonType: "string",
-            description: "must be a string and is required"
-        },
-        display_order: {
-            bsonType: "int",
-            description: "must be an int"
+        bsonType: "object",
+        required: ["name"],
+        properties: {
+            name: {
+                bsonType: "string",
+                description: "must be a string and is required"
+            },
+            display_order: {
+                bsonType: "int",
+                description: "must be an int"
+            }
+        }
+    }, {
+        timestamps: {
+            createdAt: 'createdAt',
+            updatedAt: 'updatedAt'
         }
     }
-});
+);
+```
 
+The first argument is the schema object.
+The Schema constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
+'createdAt' property will be set once document is first inserted to db.
+'updatedAt' property will be set every time document is updates in db.
+
+### Defining a Schema
+
+```js
 const myModel = mongoOrmInstance.model('ModelName', mySchema);
 ```
 
 The first argument is the name of the collection your model is for.
 
-### Insert a Document
+### Queries
+
+All methods are async and returns **Query** object
+
+* find(query, options)
+* findOne(query, options)
+* remove(query, options)
+* findOneAndUpdate(filter, update, options)
+* insertOne(doc, options)
+* insertMany(docs, options)
+* aggregate(query, options)
+
+Example of performing **find** query:
 
 ```js
-myModel.insertOne({name: "General", display_order: 1}).asResultPromise().exec().then(() => {
-        console.log(`Insert ${res.length} new documents: ${JSON.stringify(res)}`);
+const query = {
+    display_order: {$gte: 2},
+};
 
-    });
+const res = await myModel.find(query).exec();
 ```
 
-### Find a Document
+The exec() method performs the requested query and returns a **Cursor** object.
+
+MongoOrm implements a second method called **asResultPromise()** that unwraps the **Cursor** object and can be used as follow:
 
 ```js
-myModel.find({name: "General"}).asResultPromise().exec().then(() => {
-        console.log(`Found ${res.length} documents: ${JSON.stringify(res)}`);
+const query = {
+    display_order: {$gte: 2},
+};
 
-    });
+const res = await myModel.find(query).asResultPromise().exec();
 ```

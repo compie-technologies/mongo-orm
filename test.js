@@ -1,10 +1,10 @@
 const mongoOrm = require("./index");
-const {Schema} = require("./index");
-const MongoClient = require('mongodb').MongoClient;
+const {Schema, MongoClient} = require("./index");
+// const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-const url = 'mongodb://root:root@localhost:27017';
-// const url = 'mongodb://localhost:27017';
+// const url = 'mongodb://root:root@localhost:27017';
+const url = 'mongodb://localhost:27017';
 
 // Database Name
 const dbName = 'myproject';
@@ -15,8 +15,8 @@ MongoClient.connect(url).then(client => {
     /** @type {Db} */
     const db = client.db(dbName);
 
-    /**@type{MongoOrm}*/
-    const mongoOrmInstance = mongoOrm.create(db);
+    /**@type {MongoOrm}*/
+    const mongoOrmInstance = mongoOrm.create(db, {schemaValidation: true});
 
     // Define schema
     let categoryNameSchema = new Schema({
