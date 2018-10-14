@@ -48,7 +48,7 @@ const {MongoClient} = require('mongo-orm');
 ```js
 MongoClient.connect(url).then(client => {
 
-    /** @type {Db} */
+    /**@type {Db}*/
     const db = client.db(dbName);
 
     /**@type {MongoOrm}*/
