@@ -137,6 +137,7 @@ const query = {
     display_order: {$gte: 2},
 };
 
+/**@type {Cursor}*/
 const res = await myModel.find(query).exec();
 ```
 
@@ -149,5 +150,6 @@ const query = {
     display_order: {$gte: 2},
 };
 
+/**@type {Object[]}*/
 const res = await myModel.find(query).asResultPromise().exec();
 ```
