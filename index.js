@@ -6,6 +6,8 @@
 
 const mongoOrm = require('./lib/mongorm-object');
 const Schema = require('./lib/schema');
+const MongoClient = require('mongodb').MongoClient;
 
 mongoOrm.Schema = Schema;
+mongoOrm.MongoClient = MongoClient;
 module.exports = mongoOrm;
