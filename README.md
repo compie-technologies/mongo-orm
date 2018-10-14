@@ -98,7 +98,7 @@ const mySchema = new Schema({
 
 The first argument is the schema object. See [Schema Validation](https://docs.mongodb.com/manual/core/schema-validation/index.html) for details.
 
-The `Schema` constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties: 'createdAt' and 'updatedAt'.
+The `Schema` constructor takes a second optional argument called 'options', which represents schema's additional timestamp related properties:
 * `createdAt` property will be set once document is first inserted to db.
 * `updatedAt` property will be set every time document is updates in db.
 
@@ -112,11 +112,13 @@ Indexes can improve your application's performance. The following function creat
 mySchema.createIndex({'name': 1}, {unique: true, background: true});
 ```
 
-The [`createIndex()`](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/) method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
+The `createIndex()` method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
+
+For more detailed information regarding index creation, see the [mongodb documentation]((https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/)).
 
 #### Middleware
 
-Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions. The following function creates a middleware pre saving new document:
+Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions. Middleware are useful for atomizing model logic. The following function creates a pre saving new document middleware:
 ```js
 mySchema.pre(Schema.OPERATOR.SAVE, async (document, next) => {
     console.log("in pre save", document);
