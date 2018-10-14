@@ -6,7 +6,7 @@ Mongo Orm
 
 ```javascript
 // Using Node.js `require()`
-const mongoOrm = require('mongo-orm');
+const MongoOrm = require('mongo-orm');
 ```
 
 ## Installation
@@ -16,6 +16,7 @@ First install [node.js](http://nodejs.org/) and [mongodb](https://www.mongodb.or
 ```sh
 $ npm install mongo-orm
 ```
+> :warning: **Important!** Nodejs-ioc requires JavaScript ES6 
 
 ## Overview
 
@@ -23,7 +24,7 @@ $ npm install mongo-orm
 Using `MongoClient.connect()` according to [MongoDB driver api-doc](http://mongodb.github.io/node-mongodb-native/3.1/api)
 
 ```js
-const mongoOrm = require('mongo-orm');
+const MongoOrm = require('mongo-orm');
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
@@ -52,7 +53,7 @@ MongoClient.connect(url).then(client => {
     const db = client.db(dbName);
 
     /**@type {MongoOrm}*/
-    const mongoOrmInstance = mongoOrm.create(db);
+    const mongoOrmInstance = MongoOrm.create(db);
 });
 ```
 
@@ -61,7 +62,7 @@ The `create()` method takes a second optional argument called 'options', which i
 const options = {schemaValidation: true};
 
 /**@type {MongoOrm}*/
-const mongoOrmInstance = mongoOrm.create(db, options);
+const mongoOrmInstance = MongoOrm.create(db, options);
 ```
 
 Once set to **true**, json schema validation will be performed on all created models.
@@ -101,14 +102,29 @@ The `Schema` constructor takes a second optional argument called 'options', whic
 * `createdAt` property will be set once document is first inserted to db.
 * `updatedAt` property will be set every time document is updates in db.
 
-### Create an Index
+
+Aside from defining the structure of your documents and the types of data you're storing, a `Schema` handles the definition of both **indexes** and **middleware**.
+
+#### Index
 
 Indexes can improve your application's performance. The following function creates an index on the `name` field:
 ```js
 mySchema.createIndex({'name': 1}, {unique: true, background: true});
 ```
 
-The `createIndex()` method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
+The [`createIndex()`](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/) method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
+
+#### Middleware
+
+Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions. The following function creates a middleware pre saving new document:
+```js
+mySchema.pre(Schema.OPERATOR.SAVE, async (document, next) => {
+    console.log("in pre save", document);
+    // do stuff
+    next();
+});
+```
+MongoOrm supports 2 types of operators: `Schema.OPERATOR.SAVE` and `Schema.OPERATOR.UPDATE`.
 
 ### Defining a Model
 
@@ -130,7 +146,10 @@ All methods are async and returns `Query` object
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
 
-Example of performing `find()` query:
+The `exec()` method performs the requested query and returns a [`Cursor`](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
+When the find() method “returns documents,” the method is actually returning a `Cursor` to the documents.
+
+Example of performing `find()` query using `exec()`:
 
 ```js
 const query = {
@@ -141,9 +160,7 @@ const query = {
 const res = await myModel.find(query).exec();
 ```
 
-The `exec()` method performs the requested query and returns a `Cursor` object.
-
-MongoOrm implements a second method called `asResultPromise()` that unwraps the response and can be used as follow:
+MongoOrm also implements a method called `asResultPromise()` that unwraps all types of `Cursor` type responses into simple object and can be used as follow:
 
 ```js
 const query = {

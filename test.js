@@ -1,4 +1,4 @@
-const mongoOrm = require("./index");
+const MongoOrm = require("./index");
 const {Schema, MongoClient} = require("./index");
 // const MongoClient = require('mongodb').MongoClient;
 
@@ -16,7 +16,7 @@ MongoClient.connect(url).then(client => {
     const db = client.db(dbName);
 
     /**@type {MongoOrm}*/
-    const mongoOrmInstance = mongoOrm.create(db, {schemaValidation: true});
+    const mongoOrmInstance = MongoOrm.create(db, {schemaValidation: true});
 
     // Define schema
     let categoryNameSchema = new Schema({
