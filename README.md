@@ -114,11 +114,11 @@ mySchema.createIndex({'name': 1}, {unique: true, background: true});
 
 The `createIndex()` method takes a second optional argument called 'options' that contains a set of options that controls the creation of the index. See [Options](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/index.html#ensureindex-options) for details.
 
-For more detailed information regarding index creation, see the [mongodb documentation]((https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/)).
+For more detailed information regarding index creation, see the [mongodb documentation](https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/).
 
 #### Middleware
 
-Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions. Middleware are useful for atomizing model logic. The following function creates a pre saving new document middleware:
+Middleware (also called pre and post hooks) are functions which are passed control during execution of asynchronous functions. The following function creates a pre saving new document middleware:
 ```js
 mySchema.pre(Schema.OPERATOR.SAVE, async (document, next) => {
     console.log("in pre save", document);
@@ -148,8 +148,8 @@ All methods are async and returns `Query` object
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
 
-The `exec()` method performs the requested query and returns a [`Cursor`](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
-When the find() method “returns documents,” the method is actually returning a `Cursor` to the documents.
+The `exec()` method performs the requested query and returns a [Cursor](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
+When the `find()` method “returns documents”, the method is actually returning a `Cursor` to the documents.
 
 Example of performing `find()` query using `exec()`:
 
@@ -162,7 +162,7 @@ const query = {
 const res = await myModel.find(query).exec();
 ```
 
-MongoOrm also implements a method called `asResultPromise()` that unwraps all types of `Cursor` type responses into simple object and can be used as follow:
+MongoOrm also implements a method called `asResultPromise()` that unwraps all `Cursor` type responses into simple object and can be used as follow:
 
 ```js
 const query = {
