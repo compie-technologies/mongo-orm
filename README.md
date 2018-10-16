@@ -11,8 +11,6 @@ const MongoOrm = require('mongo-orm');
 
 ## Installation
 
-First install [node.js](http://nodejs.org/) and [mongodb](https://www.mongodb.org/downloads). Then:
-
 ```sh
 $ npm install mongo-orm
 ```
@@ -45,7 +43,7 @@ MongoClient.connect(url).then(client => {
 });
 ```
 
-For your convenience, MongoOrm expose the `MongoClient` from the mongo driver (no need to require mongodb)
+For your convenience, MongoOrm expose the `MongoClient` from the mongo driver (**no need to require mongodb**)
 
 ```js
 const MongoOrm = require('mongo-orm');
@@ -155,16 +153,16 @@ All methods are async and returns `Query` object
 
 * `find(query, options)`
 * `findOne(query, options)`
-* `remove(query, options)`
 * `findOneAndUpdate(filter, update, options)`
+* `remove(query, options)`
 * `insertOne(doc, options)`
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
 
-The `exec()` method performs the requested query and returns an object or a [Cursor](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
-When the `find()` method “returns documents”, the method is actually returning a `Cursor` to the documents.
+The `exec()` method performs the requested query and returns its response, different queries have different response types.
+For more detailed information regarding queries responses, see [mongodb Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/).
 
-Example of performing `find()` query using `exec()`:
+When the `find()` method “returns documents”, the method is actually returning a `Cursor` to the documents that match the query criteria.
 
 ```js
 const query = {
@@ -175,9 +173,7 @@ const query = {
 const res = await myModel.find(query).exec();
 ```
 
-For more detailed information regarding queries responses, see [mongodb Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/).
-
-MongoOrm also implements a method called `asResultPromise()` that unwraps all `Cursor` type responses into simple object and can be used as follow:
+MongoOrm also implements a method called `asResultPromise()` that unwraps the query response into simple object and can be used as follow:
 
 ```js
 const query = {
