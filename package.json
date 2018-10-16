@@ -1,19 +1,21 @@
 {
   "name": "mongo-orm",
   "version": "0.1.0",
-  "author": "Ariel Zadok. <ariel@compie.co.il> ",
+  "author": "Ariel Zadok. <ariel@compie.co.il>",
   "contributors": [
     "Amit Landau <amit@compie.co.il>"
   ],
-  "description": "ORM for MongoDB",
+  "description": "ORM for MongoDB that wraps Node.js MongoDB driver",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/compie-technologies/mongo-orm"
+    "url": "git+https://github.com/compie-technologies/mongo-orm.git"
   },
   "main": "index",
   "keywords": [
-    "mongo-orm"
+    "mongo-orm",
+    "mongodb",
+    "nodejs"
   ],
   "dependencies": {
     "mongodb": "3.1.6",
@@ -22,5 +24,16 @@
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
+  },
+  "bugs": {
+    "url": "https://github.com/compie-technologies/mongo-orm/issues"
+  },
+  "homepage": "https://github.com/compie-technologies/mongo-orm#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
