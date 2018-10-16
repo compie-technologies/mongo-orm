@@ -6,13 +6,13 @@ ORM for [MongoDB](https://www.mongodb.com/) in Node.js.
 
 ```javascript
 // Using Node.js `require()`
-const Mongorm = require('@compie/mongorm');
+const Mongorm = require('@compie-technologies/mongorm');
 ```
 
 ## Installation
 
 ```sh
-$ npm install @compie/mongorm
+$ npm install @compie-technologies/mongorm
 ```
 > :warning: **Important!** Mongorm requires JavaScript ES6 
 
@@ -22,7 +22,7 @@ Mongorm is a wrapper for the [Node.js MongoDB driver](https://mongodb.github.io/
 Mongorm relies on the user instantiating a connection using the driver and passing inside an instance of the `Db`.
 
 ```js
-const Mongorm = require('@compie/mongorm');
+const Mongorm = require('@compie-technologies/mongorm');
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
@@ -46,8 +46,8 @@ MongoClient.connect(url).then(client => {
 For your convenience, Mongorm expose the `MongoClient` from the mongo driver (**no need to require mongodb**)
 
 ```js
-const Mongorm = require('@compie/mongorm');
-const {MongoClient} = require('@compie/mongorm');
+const Mongorm = require('@compie-technologies/mongorm');
+const {MongoClient} = require('@compie-technologies/mongorm');
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
