@@ -20,8 +20,8 @@ $ npm install mongo-orm
 
 ## Overview
 
-### Connecting to MongoDB
-Using `MongoClient.connect()` according to [MongoDB driver api-doc](http://mongodb.github.io/node-mongodb-native/3.1/api)
+MongoOrm is a wrapper for the [Node.js MongoDB driver](https://www.mongodb.com/), it does not handle authentication natively.
+MongoOrm relies on the user instantiating a connection using the driver and passing inside an instance of the `Db`.
 
 ```js
 const MongoOrm = require('mongo-orm');
@@ -36,18 +36,30 @@ const dbName = 'myproject';
 // Use connect method to connect to the server
 MongoClient.connect(url).then(client => {
     console.log("Connected successfully to server");
+
+    /**@type {Db}*/
+    const db = client.db(dbName);
+
+    /**@type {MongoOrm}*/
+    const mongoOrmInstance = MongoOrm.create(db);
 });
 ```
 
-The `MongoClient` can also be required using the MongoOrm:
+For your convenience, MongoOrm expose the `MongoClient` from the mongo driver (no need to require mongodb)
+
 ```js
+const MongoOrm = require('mongo-orm');
 const {MongoClient} = require('mongo-orm');
-```
 
-### Creating a MongoOrm instance
+// Connection URL
+const url = 'mongodb://localhost:27017';
 
-```js
+// Database Name
+const dbName = 'myproject';
+
+// Use connect method to connect to the server
 MongoClient.connect(url).then(client => {
+    console.log("Connected successfully to server");
 
     /**@type {Db}*/
     const db = client.db(dbName);
@@ -58,6 +70,7 @@ MongoClient.connect(url).then(client => {
 ```
 
 The `create()` method takes a second optional argument called 'options', which indicates whether json schema validation is required.
+
 ```js
 const options = {schemaValidation: true};
 
@@ -148,7 +161,7 @@ All methods are async and returns `Query` object
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
 
-The `exec()` method performs the requested query and returns a [Cursor](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
+The `exec()` method performs the requested query and returns an object or a [Cursor](https://docs.mongodb.com/manual/reference/glossary/#term-cursor) to the documents that match the query criteria.
 When the `find()` method “returns documents”, the method is actually returning a `Cursor` to the documents.
 
 Example of performing `find()` query using `exec()`:
@@ -161,6 +174,8 @@ const query = {
 /**@type {Cursor}*/
 const res = await myModel.find(query).exec();
 ```
+
+For more detailed information regarding queries responses, see [mongodb Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/).
 
 MongoOrm also implements a method called `asResultPromise()` that unwraps all `Cursor` type responses into simple object and can be used as follow:
 
