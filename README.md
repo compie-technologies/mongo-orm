@@ -14,7 +14,7 @@ const MongoOrm = require('mongo-orm');
 ```sh
 $ npm install mongo-orm
 ```
-> :warning: **Important!** Nodejs-ioc requires JavaScript ES6 
+> :warning: **Important!** MongoOrm requires JavaScript ES6 
 
 ## Overview
 
