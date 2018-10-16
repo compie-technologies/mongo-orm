@@ -83,7 +83,7 @@ Once set to **true**, json schema validation will be performed on all created mo
 Models are defined through the `Schema` interface.
 
 ```js
-const {Schema} = require('mongo-orm');
+const {Schema} = require('@compie-technologies/mongorm');
 
 const mySchema = new Schema({
         bsonType: "object",
