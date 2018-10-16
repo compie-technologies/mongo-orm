@@ -149,8 +149,6 @@ The first argument is the name of the collection your model is for.
 
 ### Queries
 
-All methods are async and returns `Query` object
-
 * `find(query, options)`
 * `findOne(query, options)`
 * `findOneAndUpdate(filter, update, options)`
@@ -158,6 +156,8 @@ All methods are async and returns `Query` object
 * `insertOne(doc, options)`
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
+
+All methods are async.
 
 The `exec()` method performs the requested query and returns its response, different queries have different response types.
 For more detailed information regarding queries responses, see [mongodb Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/).
