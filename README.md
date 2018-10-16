@@ -18,7 +18,7 @@ $ npm install @compie/mongorm
 
 ## Overview
 
-Mongorm is a wrapper for the [Node.js MongoDB driver](https://www.mongodb.com/), it does not handle authentication natively.
+Mongorm is a wrapper for the [Node.js MongoDB driver](https://mongodb.github.io/node-mongodb-native/), it does not handle authentication natively.
 Mongorm relies on the user instantiating a connection using the driver and passing inside an instance of the `Db`.
 
 ```js
