@@ -1,28 +1,28 @@
-Mongo Orm
+Mongorm
 ======================
-[MongoDB](https://www.mongodb.com/) driver wrapper for Node.js.
+ORM for [MongoDB](https://www.mongodb.com/) in Node.js.
 
 ## Importing
 
 ```javascript
 // Using Node.js `require()`
-const MongoOrm = require('mongo-orm');
+const Mongorm = require('@compie/mongorm');
 ```
 
 ## Installation
 
 ```sh
-$ npm install mongo-orm
+$ npm install @compie/mongorm
 ```
-> :warning: **Important!** MongoOrm requires JavaScript ES6 
+> :warning: **Important!** Mongorm requires JavaScript ES6 
 
 ## Overview
 
-MongoOrm is a wrapper for the [Node.js MongoDB driver](https://www.mongodb.com/), it does not handle authentication natively.
-MongoOrm relies on the user instantiating a connection using the driver and passing inside an instance of the `Db`.
+Mongorm is a wrapper for the [Node.js MongoDB driver](https://www.mongodb.com/), it does not handle authentication natively.
+Mongorm relies on the user instantiating a connection using the driver and passing inside an instance of the `Db`.
 
 ```js
-const MongoOrm = require('mongo-orm');
+const Mongorm = require('@compie/mongorm');
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
@@ -38,16 +38,16 @@ MongoClient.connect(url).then(client => {
     /**@type {Db}*/
     const db = client.db(dbName);
 
-    /**@type {MongoOrm}*/
-    const mongoOrmInstance = MongoOrm.create(db);
+    /**@type {Mongorm}*/
+    const mongormInstance = Mongorm.create(db);
 });
 ```
 
-For your convenience, MongoOrm expose the `MongoClient` from the mongo driver (**no need to require mongodb**)
+For your convenience, Mongorm expose the `MongoClient` from the mongo driver (**no need to require mongodb**)
 
 ```js
-const MongoOrm = require('mongo-orm');
-const {MongoClient} = require('mongo-orm');
+const Mongorm = require('@compie/mongorm');
+const {MongoClient} = require('@compie/mongorm');
 
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -62,8 +62,8 @@ MongoClient.connect(url).then(client => {
     /**@type {Db}*/
     const db = client.db(dbName);
 
-    /**@type {MongoOrm}*/
-    const mongoOrmInstance = MongoOrm.create(db);
+    /**@type {Mongorm}*/
+    const mongormInstance = Mongorm.create(db);
 });
 ```
 
@@ -72,8 +72,8 @@ The `create()` method takes a second optional argument called 'options', which i
 ```js
 const options = {schemaValidation: true};
 
-/**@type {MongoOrm}*/
-const mongoOrmInstance = MongoOrm.create(db, options);
+/**@type {Mongorm}*/
+const mongormInstance = Mongorm.create(db, options);
 ```
 
 Once set to **true**, json schema validation will be performed on all created models.
@@ -137,12 +137,12 @@ mySchema.pre(Schema.OPERATOR.SAVE, async (document, next) => {
     next();
 });
 ```
-MongoOrm supports 2 types of operators: `Schema.OPERATOR.SAVE` and `Schema.OPERATOR.UPDATE`.
+Mongorm supports 2 types of operators: `Schema.OPERATOR.SAVE` and `Schema.OPERATOR.UPDATE`.
 
 ### Defining a Model
 
 ```js
-const myModel = mongoOrmInstance.model('ModelName', mySchema);
+const myModel = mongormInstance.model('ModelName', mySchema);
 ```
 
 The first argument is the name of the collection your model is for.
@@ -172,7 +172,7 @@ const query = {
 const res = await myModel.find(query).exec();
 ```
 
-MongoOrm also implements a method called `asResultPromise()` that unwraps the query response into simple object and can be used as follow:
+Mongorm also implements a method called `asResultPromise()` that unwraps the query response into simple object and can be used as follow:
 
 ```js
 const query = {

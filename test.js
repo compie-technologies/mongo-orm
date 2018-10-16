@@ -1,9 +1,10 @@
-const MongoOrm = require("./index");
+/**@type {Mongorm}*/
+const Mongorm = require("./index");
+
 const {Schema, MongoClient} = require("./index");
 // const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-// const url = 'mongodb://root:root@localhost:27017';
 const url = 'mongodb://localhost:27017';
 
 // Database Name
@@ -15,8 +16,8 @@ MongoClient.connect(url).then(client => {
     /** @type {Db} */
     const db = client.db(dbName);
 
-    /**@type {MongoOrm}*/
-    const mongoOrmInstance = MongoOrm.create(db, {schemaValidation: true});
+    /**@type {Mongorm}*/
+    const mongormInstance = Mongorm.create(db, {schemaValidation: true});
 
     // Define schema
     let categoryNameSchema = new Schema({
@@ -35,7 +36,7 @@ MongoClient.connect(url).then(client => {
     });
 
     // Define model
-    const categoryNameModel = mongoOrmInstance.model('category-name', categoryNameSchema);
+    const categoryNameModel = mongormInstance.model('category-name', categoryNameSchema);
 
     // Insert one document
     categoryNameModel.insertOne({name: "General", display_order: 1}).asResultPromise().exec().then(() => {
