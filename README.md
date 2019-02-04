@@ -152,7 +152,8 @@ The first argument is the name of the collection your model is for.
 * `find(query, options)`
 * `findOne(query, options)`
 * `findOneAndUpdate(filter, update, options)`
-* `remove(query, options)`
+* `deleteOne(filter, options)`
+* `deleteMany(filter, options)`
 * `insertOne(doc, options)`
 * `insertMany(docs, options)`
 * `aggregate(query, options)`
